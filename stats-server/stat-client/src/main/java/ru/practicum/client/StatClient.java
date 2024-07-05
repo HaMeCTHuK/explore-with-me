@@ -14,9 +14,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
+import static ru.practicum.client.util.DateConstants.DATE_TIME_FORMAT;
+
 @Service
 public class StatClient extends BaseClient {
-    private static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Autowired
     public StatClient(@Value("${stats-server.url}") String serverUrl, RestTemplateBuilder builder) {
@@ -35,8 +36,8 @@ public class StatClient extends BaseClient {
     public ResponseEntity<Object> getStatistics(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
         String urisString = String.join(",", uris);
         Map<String, Object> parameters = Map.of(
-                "start", start.format(DATE_TIME_FORMAT),
-                "end", end.format(DATE_TIME_FORMAT),
+                "start", start.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT)),
+                "end", end.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT)),
                 "uris", urisString,
                 "unique", unique
         );

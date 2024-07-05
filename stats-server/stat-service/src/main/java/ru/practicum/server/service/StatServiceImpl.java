@@ -33,13 +33,22 @@ public class StatServiceImpl implements StatService {
     @Override
     public List<StatDto> getStatistics(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
         log.info("Fetching statistics from {} to {}. URIs: {}, Unique: {}", start, end, uris, unique);
-        List<StatEntity> stat = (uris == null || uris.isEmpty())
-                ? unique
-                ? statRepository.findAllUniqueStats(start, end)
-                : statRepository.findAllStats(start, end)
-                : unique
-                ? statRepository.findUniqueStat(start, end, uris)
-                : statRepository.findStat(start, end, uris);
+        List<StatEntity> stat;
+
+        if (uris == null || uris.isEmpty()) {
+            if (unique) {
+                stat = statRepository.findAllUniqueStats(start, end);
+            } else {
+                stat = statRepository.findAllStats(start, end);
+            }
+        } else {
+            if (unique) {
+                stat = statRepository.findUniqueStat(start, end, uris);
+            } else {
+                stat = statRepository.findStat(start, end, uris);
+            }
+        }
+
         List<StatDto> result = stat.stream().map(StatMapper::toStatDto).collect(Collectors.toList());
         log.info("Fetched {} statistics.", result.size());
         return result;

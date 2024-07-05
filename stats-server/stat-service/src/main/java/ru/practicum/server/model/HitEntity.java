@@ -22,7 +22,7 @@ public class HitEntity {
     @Column(nullable = false)
     private String app;
 
-    @Column
+    @Column(nullable = false)
     private String uri;
 
     @Column(nullable = false)
