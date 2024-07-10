@@ -18,10 +18,10 @@ public class CategoryPublicController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Collection<CategoryDto> getAllCategories(@RequestParam(value = "from", required = false, defaultValue = "0")
-                                                    @PositiveOrZero(message = "Значение 'from' должно быть положительным")
+    public Collection<CategoryDto> getAllCategories(@RequestParam(value = "from", defaultValue = "0")
+                                                    @PositiveOrZero(message = "Значение 'from' должно быть неотрицательным")
                                                     final Integer from,
-                                                    @RequestParam(value = "size", required = false, defaultValue = "10")
+                                                    @RequestParam(value = "size", defaultValue = "10")
                                                     @Positive(message = "Значение 'size' должно быть положительным")
                                                     final Integer size) {
         return categoryService.getAllCategories(from, size);

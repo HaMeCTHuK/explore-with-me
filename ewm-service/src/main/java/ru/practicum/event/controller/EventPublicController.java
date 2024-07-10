@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
+import static ru.practicum.util.DateConstants.DATE_TIME_FORMAT;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/events")
@@ -28,14 +30,14 @@ public class EventPublicController {
     }
 
     @GetMapping
-    public Collection<EventDto> getAllPublic(@RequestParam(required = false, defaultValue = "") String text,
-                                             @RequestParam(required = false, defaultValue = "") List<Long> categories,
+    public Collection<EventDto> getAllPublic(@RequestParam(defaultValue = "") String text,
+                                             @RequestParam(defaultValue = "") List<Long> categories,
                                              @RequestParam(required = false) Boolean paid,
                                              @RequestParam(required = false)
-                                                 @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+                                                 @DateTimeFormat(pattern = DATE_TIME_FORMAT)
                                                  LocalDateTime rangeStart,
                                              @RequestParam(required = false)
-                                                 @FutureOrPresent @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+                                                 @FutureOrPresent @DateTimeFormat(pattern = DATE_TIME_FORMAT)
                                                  LocalDateTime rangeEnd,
                                              @RequestParam(defaultValue = "false") boolean onlyAvailable,
                                              @RequestParam(required = false) String sort,

@@ -56,22 +56,19 @@ public class CategoryServiceImpl implements CategoryService {
 
         if (!eventRepository.findAllByCategoryId(catId).isEmpty()) {
             throw new ConflictException("Невозможно удалить категорию, так как к ней привязаны события!");
-        } else {
-            categoryRepository.deleteById(catId);
-            log.info("Удалена категория с id {}", catId);
         }
+        categoryRepository.deleteById(catId);
+        log.info("Удалена категория с id {}", catId);
     }
 
     @Override
     public Collection<CategoryDto> getAllCategories(Integer from, Integer size) {
         Pageable page = PageRequest.of(from / size, size, Sort.by("id").ascending());
         Page<Category> categories = categoryRepository.findAll(page);
-        if (categories.isEmpty()) {
-            return Collections.emptyList();
-        } else {
-            log.info("Получены категории {}", categories);
-            return categories.stream().map(CategoryMapper::toCategoryDto).collect(Collectors.toList());
-        }
+        log.info("Получены категории {}", categories);
+        return categories.stream()
+                .map(CategoryMapper::toCategoryDto)
+                .collect(Collectors.toList());
     }
 
     @Override

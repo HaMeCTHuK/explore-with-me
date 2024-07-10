@@ -34,10 +34,10 @@ public class EventPrivateController {
     @GetMapping("/{userId}/events")
     @ResponseStatus(HttpStatus.OK)
     public Collection<EventShortDto> getUserEvents(@PathVariable @Positive final Long userId,
-                                                   @RequestParam(value = "from", required = false, defaultValue = "0")
-                                                   @PositiveOrZero(message = "Значение 'from' должно быть положительным")
+                                                   @RequestParam(value = "from", defaultValue = "0")
+                                                   @PositiveOrZero(message = "Значение 'from' должно быть неотрицательным")
                                                    final Integer from,
-                                                   @RequestParam(value = "size", required = false, defaultValue = "10")
+                                                   @RequestParam(value = "size", defaultValue = "10")
                                                    @Positive(message = "Значение 'size' должно быть положительным")
                                                    final Integer size) {
         return eventService.getAllByUserId(userId, from, size);

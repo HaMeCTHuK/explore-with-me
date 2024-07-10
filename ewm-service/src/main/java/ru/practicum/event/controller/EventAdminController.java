@@ -17,6 +17,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ru.practicum.util.DateConstants.DATE_TIME_FORMAT;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/admin")
@@ -35,13 +37,13 @@ public class EventAdminController {
     public Collection<EventDto> searchEvents(@RequestParam(defaultValue = "") List<Long> users,
                                              @RequestParam(defaultValue = "") List<String> states,
                                              @RequestParam(defaultValue = "") List<Long> categories,
-                                             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+                                             @RequestParam(required = false) @DateTimeFormat(pattern = DATE_TIME_FORMAT)
                                              LocalDateTime rangeStart,
-                                             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+                                             @RequestParam(required = false) @DateTimeFormat(pattern = DATE_TIME_FORMAT)
                                              LocalDateTime rangeEnd,
-                                             @RequestParam(value = "from", required = false, defaultValue = "0")
-                                             @PositiveOrZero(message = "Значение 'from' должно быть положительным") Integer from,
-                                             @RequestParam(value = "size", required = false, defaultValue = "10")
+                                             @RequestParam(value = "from", defaultValue = "0")
+                                             @PositiveOrZero(message = "Значение 'from' должно быть неотрицательным") Integer from,
+                                             @RequestParam(value = "size", defaultValue = "10")
                                              @Positive(message = "Значение 'size' должно быть положительным") Integer size) {
 
         return eventService.searchEvents(users, states.stream().map(EventState::valueOf).collect(Collectors.toList()),
