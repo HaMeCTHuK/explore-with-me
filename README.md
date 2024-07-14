@@ -1,6 +1,6 @@
 # java-explore-with-me
 
-
+[Ссылка на пул реквест](https://github.com/HaMeCTHuK/explore-with-me/pull/3)
 
 ## Архитектура
 
