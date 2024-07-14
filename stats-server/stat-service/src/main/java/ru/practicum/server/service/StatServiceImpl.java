@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dto.HitDto;
 import ru.practicum.dto.StatDto;
+import ru.practicum.server.exception.BadRequestException;
 import ru.practicum.server.mapper.HitMapper;
 import ru.practicum.server.mapper.StatMapper;
 import ru.practicum.server.model.StatEntity;
@@ -33,6 +34,9 @@ public class StatServiceImpl implements StatService {
     @Override
     public List<StatDto> getStatistics(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
         log.info("Fetching statistics from {} to {}. URIs: {}, Unique: {}", start, end, uris, unique);
+        if (start.isAfter(end)) {
+            throw new BadRequestException("Время окончания должно быть позднее времени начала!");
+        }
         List<StatEntity> stat;
 
         if (uris == null || uris.isEmpty()) {
