@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class CommentDto {
-    Long id;
-    String text;
-    Long commentatorId;
-    Long eventId;
-    LocalDateTime created;
-    LocalDateTime updated;
+    private Long id;
+    private String text;
+    private Long commentatorId;
+    private Long eventId;
+    private LocalDateTime created;
+    private LocalDateTime updated;
 }
